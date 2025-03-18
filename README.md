@@ -10,4 +10,4 @@ A little about **me**:
   2. Coding 
 * I am interested in learning about the *application* of code in the internet and workplaces of the latest tech.
 
-A meme that captures how I currently feel about my university studies is ![]([https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdGtndjcweTE2bTJscWowZzdvbHFubmdtcmhvN2w0aWYyZHdwamw3YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Rlwz4m0aHgXH13jyrE/giphy.gif])
+A meme that captures how I currently feel about my university studies is ![]([https://media1.tenor.com/m/ekebXEH4uBEAAAAd/monkey-laught.gif])
