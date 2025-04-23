@@ -5,9 +5,6 @@ output: html_fragment
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
-library(tidyverse)  # For data manipulation and ggplot2
-library(ggplot2)    # For plotting
-
 ```
 
 ```{css}
@@ -35,6 +32,8 @@ The following bar chart shows the initial energy of the music listening sessions
 
 
 ```{r}
+library(tidyverse)  # For data manipulation and ggplot2
+library(ggplot2)    # For plotting
 # Load data
 logged_data <- read.csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vRtn8ewxlbvlcvY-O4AXnk8f4c_0nmjhQxei9uqpwI83h2H6yI89d4ROVpfmEUrgQXyuugoGz3At83d/pub?output=csv')
 
