@@ -5,6 +5,7 @@ output: html_fragment
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+
 ```
 
 ```{css}
@@ -20,9 +21,6 @@ h2 {
 
 ```
 
-# Tracking duration of music listening sessions based on energy levels.
-
-This analysis researches data on music consumption and energy levels. Even though the data itself has information to make comparisons with music genres, listening location, time of day, etc. We will focus on how energy levels may be related to the duration of a music listening session, giving insight into how music affects our motivation on a day-to-day basis.
 
 ## Data 
 
@@ -32,8 +30,7 @@ The following bar chart shows the initial energy of the music listening sessions
 
 
 ```{r}
-library(tidyverse)  # For data manipulation and ggplot2
-library(ggplot2)    # For plotting
+library(tidyverse)
 # Load data
 logged_data <- read.csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vRtn8ewxlbvlcvY-O4AXnk8f4c_0nmjhQxei9uqpwI83h2H6yI89d4ROVpfmEUrgQXyuugoGz3At83d/pub?output=csv')
 
@@ -68,7 +65,6 @@ ggplot(i_energy_duration, aes(x = as.factor(initial_energy), y = mean_duration, 
   theme(plot.title = element_text(hjust = 0.5))
 
 ```
-
 
 And the following bar chart shows the same but for final energy.
 
