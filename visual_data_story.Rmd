@@ -1,0 +1,120 @@
+---
+title: "Project 4: HTML Visual Data Story"
+author: "Eugene Di Giuseppe"
+date: "2025-04-28"
+subtitle: "STATS 220 Semester One 2025"
+output: html_document
+---
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+
+library(tidyverse)
+
+
+```
+
+
+```{css echo=FALSE}
+/* Improve readability */
+body {
+  font-family: Arial, sans-serif;
+
+  font-size: 16px;
+  color: black;
+  background-color: #f3f5eb ;
+}
+
+h1, h2, h3 {
+  font-weight: bold;
+  color: black;
+}
+
+caption {
+color: black;
+font-weight: bold;
+
+}
+
+```
+
+
+```{js}
+$(function() {
+  $(".level2").css('visibility', 'hidden');
+  $(".level2").first().css('visibility', 'visible');
+  $(".container-fluid").height($(".container-fluid").height() + 300);
+  $(window).on('scroll', function() {
+    $('h2').each(function() {
+      var h2Top = $(this).offset().top - $(window).scrollTop();
+      var windowHeight = $(window).height();
+      if (h2Top >= 0 && h2Top <= windowHeight / 2) {
+        $(this).parent('div').css('visibility', 'visible');
+      } else if (h2Top > windowHeight / 2) {
+        $(this).parent('div').css('visibility', 'hidden');
+      }
+    });
+  });
+})
+```
+
+```{css}
+.figcaption {display: none}
+```
+
+## Energy Levels and Genres
+
+![](plot1.png){width=800px height=auto}
+
+
+### Description:
+
+This plot is a collection of boxplots, where each boxplot corresponds to a genre and the numeric data are the energy levels posterior to the music-listening session. geom_jitter() was used to better spot the data, but we should expect them at integer locations.
+
+The stars/rhombi represent the average energy level per genre, where red corresponds to post-session average and blue to pre-session average.
+
+The Genre axis has been ordered such that it ascends based on increasing post-session average energy.
+
+
+
+## Energy Densities
+
+![](plot2.png){width=700px height=auto}
+
+### Description:
+
+This plot is a comparison of two density graphs for the mean energy levels before and after listening.
+The mean energies have been grouped by genre which explains why we see distributions of the mean energies for before and after listening.
+The two vertical lines represent the total mean taken over all genres before the session and afterwards.
+
+
+## Mean session duration by hour of day in May
+
+![](plot3.png){width=800px height=auto}
+
+### Description:
+
+This plot looks at the mean duration of a session by what hour of the day the session occurred. The hour of day is taken over all days in May that were entries for my form.
+
+The y axis starts at 9am because no data is found between 00:00 and 09:00. I also changed 00:00 to 24:00 to better fit the progression of the sessions throughout the axis.
+My code used the date data to turn it into numeric data so its more intuitive to visualise.
+
+I made subgroups by a variable called included_intense_genres() which uses str_detect() for genres like Rock, Grunge, Alternative Rock, etc. In the hopes of seeing whether, in any given day in May, the time of the session and the kind of genres included in the session had an effect in the mean duration of the session. Where the mean duration value is taken from grouping by hour of day.
+
+
+## Day hour by mean duration, grouped by mood and genres
+
+![](plot4.png){width=700px height=auto}
+
+### Description:
+
+This plot is similar to the third plot in that it compares how the hour of some day in May + "subgroup" may have some effect in the mean duration of the session.
+
+This plot subgroups by the "Mood" category, and colours the data by all genres.
+My code uses geom_jitter() so it's important to consider that the position of the triangles is just to give an estimate for the time of day.
+
+
+
