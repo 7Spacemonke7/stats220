@@ -1,10 +1,41 @@
 ---
 title: My dynamic report
-output: html_fragment
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+
+library(tidyverse)
+library(RColorBrewer)
+# Load data
+logged_data <- read.csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vRtn8ewxlbvlcvY-O4AXnk8f4c_0nmjhQxei9uqpwI83h2H6yI89d4ROVpfmEUrgQXyuugoGz3At83d/pub?output=csv')
+
+# Rename columns for clarity
+latest_data <- logged_data %>% 
+  rename(music_software = 1,
+         session_start = 2,
+         initial_energy = 3,
+         duration_minutes = 4,
+         genres = 5,
+         listening_mood = 6,
+         tempo_bpm = 7,
+         final_energy = 8,
+         location = 9)
+
+mean_duration <- mean(latest_data$duration_minutes)
+
+# Calculate mean duration by initial energy
+i_energy_duration <- latest_data %>%
+  group_by(initial_energy) %>%
+  summarise(mean_duration = mean(duration_minutes))
+
+
+# Calculate mean duration by final energy
+f_energy_duration <- latest_data %>%
+  group_by(final_energy) %>%
+  summarise(mean_duration = mean(duration_minutes))
+
 
 ```
 
@@ -30,28 +61,7 @@ The following bar chart shows the initial energy of the music listening sessions
 
 
 ```{r}
-library(tidyverse)
-# Load data
-logged_data <- read.csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vRtn8ewxlbvlcvY-O4AXnk8f4c_0nmjhQxei9uqpwI83h2H6yI89d4ROVpfmEUrgQXyuugoGz3At83d/pub?output=csv')
 
-# Rename columns for clarity
-latest_data <- logged_data %>% 
-  rename(music_software = 1,
-         session_start = 2,
-         initial_energy = 3,
-         duration_minutes = 4,
-         genres = 5,
-         listening_mood = 6,
-         tempo_bpm = 7,
-         final_energy = 8,
-         location = 9)
-
-mean_duration <- mean(latest_data$duration_minutes)
-
-# Calculate mean duration by initial energy
-i_energy_duration <- latest_data %>%
-  group_by(initial_energy) %>%
-  summarise(mean_duration = mean(duration_minutes))
 
 # Bar chart
 ggplot(i_energy_duration, aes(x = as.factor(initial_energy), y = mean_duration, fill = as.factor(initial_energy))) +
@@ -70,11 +80,6 @@ And the following bar chart shows the same but for final energy.
 
 ```{r}
 
-# Calculate mean duration by final energy
-f_energy_duration <- latest_data %>%
-  group_by(final_energy) %>%
-  summarise(mean_duration = mean(duration_minutes))
-
 # Bar chart
 ggplot(f_energy_duration, aes(x = as.factor(final_energy), y = mean_duration, fill = as.factor(final_energy))) +
   geom_bar(stat = "identity") +
@@ -83,19 +88,19 @@ ggplot(f_energy_duration, aes(x = as.factor(final_energy), y = mean_duration, fi
        y = "Mean Duration (Minutes)") +
   theme_minimal() +
   scale_fill_brewer(palette = "Set3") +
-  theme(legend.position = "none") +
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(legend.position = "none", plot.title = element_text(hjust = 0.5))
 ```
 
 
-## Understanding the Data from the Charts
 
-### Intial Energy
+## Data from the Charts
+
+### Initial Energy
 
 * Initial energy varies from 0 to 5 because there wasn't a sample
 of 6 points of energy, though it was an option.
-* Initial energy of 0 has the highest mean duration = `r round(max(i_energy_duration), 1)`
-* Initial energy of 5 has the lowest = `r round(min(i_energy_duration), 1)`
+* Initial energy of 0 has the highest mean duration = `r round(max(i_energy_duration$mean_duration), 1)`
+* Initial energy of 5 has the lowest = `r round(min(i_energy_duration$mean_duration), 1)`
 
 
 
@@ -103,7 +108,7 @@ of 6 points of energy, though it was an option.
 
 * Final energy varies from 2 to 6, probably hinting to a trend 
 of higher energy after long listening sessions.
-* Final energy of 2 has the lowest mean duration = `r round(min(f_energy_duration), 1)`
-* Final energy of 6 has the highest = `r round(max(f_energy_duration), 1)`
+* Final energy of 2 has the lowest mean duration = `r round(min(f_energy_duration$mean_duration), 1)`
+* Final energy of 6 has the highest = `r round(max(f_energy_duration$mean_duration), 1)`
 
 
